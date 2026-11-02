@@ -1,0 +1,21 @@
+name: Summary Action
+description: "Summarizes values"
+inputs:
+  numbers:
+    default: "[1,2,3]"
+    required: false
+outputs:
+  summary_text:
+    value: ${{ steps.summarize.outputs.summary }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Clone repository
+      uses: actions/checkout@v4
+    - name: Summarize
+      id: summarize
+      shell: bash
+      run: |
+        SUMMARY=$(python ci/print_summary.py <<< ${{ inputs.numbers }})
+        echo "summary=$SUMMARY" >> $GITHUB_OUTPUT
