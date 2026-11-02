@@ -1,0 +1,23 @@
+name: Reusable Action
+on:
+  workflow_call:
+    inputs:
+      numbers:
+        type: string
+        default: "[1,2,3]"
+        required: false
+    outputs:
+      summary:
+        value: ${{ jobs.summarize.outputs.summary }}
+
+jobs:
+  summarize:
+    runs-on: ubuntu-latest
+    outputs:
+      summary: ${{ steps.summarize.outputs.summary_text }}
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v4
+      - name: Summarize
+        id: summarize
+        uses: ./.github/actions/summary-action
