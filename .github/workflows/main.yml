@@ -1,4 +1,4 @@
-name: Build, test and workflow
+name: Main Workflow
 on: push
 
 env:
